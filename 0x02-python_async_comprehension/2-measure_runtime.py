@@ -11,18 +11,15 @@ async def measure_runtime():
     in parallel.
 
     Total runtime should roughly hit 10 seconds instead of 40 seconds
-    due to the asychronous way of executing the tasks.
+    due to the asychronous way of executing the tasks using asyncio.gather
 
     Returns:
         Float: Total runtime
     """
     start = time.perf_counter()
-    await asyncio.gather(
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension()
-    )
+    await asyncio.gather(*[
+        async_comprehension() for _ in range(4)
+    ])
     elapsed = time.perf_counter() - start
 
     return elapsed
