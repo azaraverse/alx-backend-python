@@ -2,3 +2,6 @@ __pycache__/
 .mypy_cache
 *main.py
 git_render.sh
+utils.py
+client.py
+fixtures.py
