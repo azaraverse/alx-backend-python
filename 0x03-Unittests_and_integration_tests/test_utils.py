@@ -3,6 +3,7 @@
 import unittest
 from parameterized import parameterized
 from utils import access_nested_map
+from typing import Mapping, Any, Sequence
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -13,7 +14,9 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), ({"b": 2})),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-    def test_access_nested_map(self, nested_map, path, expected):
+    def test_access_nested_map(
+        self, nested_map: Mapping, path: Sequence, expected: Any
+    ) -> Any:
         """ Method that tests the return values of the access_nested_map
             function
         """
