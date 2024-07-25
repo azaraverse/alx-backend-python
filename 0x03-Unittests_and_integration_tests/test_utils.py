@@ -18,11 +18,23 @@ class TestAccessNestedMap(unittest.TestCase):
         self, nested_map: Mapping, path: Sequence, expected: Any
     ) -> Any:
         """ Method that tests the return values of the access_nested_map
-            function
+            function.
         """
-        self.assertEqual(
-            access_nested_map(nested_map, path), expected
-        )
+        self.assertEqual(access_nested_map(nested_map, path), expected)
+
+    @parameterized.expand([
+        ({}, ("a",), "'a'"),
+        ({"a": 1}, ("a", "b"), "'b'")
+    ])
+    def test_access_nested_map_exception(
+        self, nested_map: Mapping, path: Sequence, expected: Any
+    ) -> Any:
+        """ Tests that a KeyError is raised for the given inputs in the
+            parameterized decorator.
+        """
+        with self.assertRaises(KeyError) as c:
+            access_nested_map(nested_map, path)
+        self.assertEqual(str(c.exception), expected)
 
 
 if __name__ == "__main__":
