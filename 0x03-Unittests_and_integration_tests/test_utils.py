@@ -2,7 +2,7 @@
 """Unittest for Nested Maps"""
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from typing import Mapping, Any, Sequence, Dict
 from unittest.mock import Mock, patch
 
@@ -39,7 +39,8 @@ class TestAccessNestedMap(unittest.TestCase):
 
 
 class TestGetJson(unittest.TestCase):
-    """"""
+    """ Test class for get_json method
+    """
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
@@ -63,6 +64,43 @@ class TestGetJson(unittest.TestCase):
 
         # verify that the requests module was called once with the url
         mock_func.assert_called_once_with(url)
+
+
+class TestMemoize(unittest.TestCase):
+    """ Test class for memoize method
+    """
+    def test_memoize(self):
+        """ Test memoize method test func
+        """
+        class TestClass:
+            """ Test class
+            """
+            def a_method(self):
+                """ a_method func
+                """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ a_property func
+                """
+                return self.a_method()
+
+        test_case = TestClass()
+
+        # mock a_method using patch
+        with patch.object(test_case, "a_method") as mock_a_method:
+            # expected return value
+            mock_a_method.return_value = 42
+
+            # test that when calling a_property twice, correct result is
+            # returned but a_method is called one due to memoization
+            result_1 = test_case.a_property
+            result_2 = test_case.a_property
+            mock_a_method.assert_called_once()
+
+            self.assertEqual(42, result_1)
+            self.assertEqual(42, result_2)
 
 
 if __name__ == "__main__":
