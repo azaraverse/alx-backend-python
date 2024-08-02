@@ -4,6 +4,7 @@ import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock, PropertyMock
 from client import GithubOrgClient
+from typing import Dict, Callable
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -40,7 +41,7 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(response, result)
 
     @patch("client.get_json")
-    def test_public_repos(self, get_json):
+    def test_public_repos(self, get_json: Callable) -> None:
         """ Tests the public_repos method of the GithubOrgClient class
         """
         test_payload = {
@@ -101,3 +102,18 @@ class TestGithubOrgClient(unittest.TestCase):
 
             get_json.assert_called_once()
             mock_public_repos_url.assert_called_once()
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False)
+    ])
+    def test_has_license(
+        self, repo: Dict[str, Dict], license_key: str, expected: bool
+    ) -> None:
+        """ Tests that the has_license method returns the expected value
+        by parameterizing the test with inputs
+        """
+        client = GithubOrgClient("gitloper-azara")
+        result = client.has_license(repo, license_key)
+
+        self.assertEqual(result, expected)
