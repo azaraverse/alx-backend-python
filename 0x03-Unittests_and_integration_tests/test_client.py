@@ -38,3 +38,63 @@ class TestGithubOrgClient(unittest.TestCase):
             result = "https://api.github.com/users/gitloper-azara/repos"
 
             self.assertEqual(response, result)
+
+    @patch("client.get_json")
+    def test_public_repos(self, get_json):
+        """ Tests the public_repos method of the GithubOrgClient class
+        """
+        test_payload = {
+            "repos_url": "https://api.github.com/users/gitloper-azara/repos",
+            "repos": [
+                {
+                    "id": 802504935,
+                    "node_id": "R_kgDOL9VA5w",
+                    "name": "SkySync",
+                    "full_name": "gitloper-azara/SkySync",
+                    "private": False,
+                    "owner": {
+                        "login": "gitloper-azara",
+                        "id": 133230975,
+                    },
+                    "fork": False,
+                    "url": "https://api.github.com/repos/gitloper-azara/SkySync",  # nopep8
+                    "created_at": "2024-05-18T13:36:21Z",
+                    "updated_at": "2024-06-11T23:36:44Z",
+                    "pushed_at": "2024-06-11T23:36:40Z",
+                    "size": 389,
+                    "language": "Python",
+                },
+                {
+                    "id": 808693419,
+                    "node_id": "R_kgDOMDOuqw",
+                    "name": "SkySync_landing_page",
+                    "full_name": "gitloper-azara/SkySync_landing_page",
+                    "private": False,
+                    "owner": {
+                        "login": "gitloper-azara",
+                        "id": 133230975,
+                    },
+                    "fork": False,
+                    "url": "https://api.github.com/repos/gitloper-azara/SkySync_landing_page",  # nopep8
+                    "created_at": "2024-05-31T15:57:37Z",
+                    "updated_at": "2024-06-02T18:02:26Z",
+                    "pushed_at": "2024-06-02T18:02:23Z",
+                    "size": 88080,
+                    "language": "HTML",
+                }
+            ]
+        }
+
+        get_json.return_value = test_payload["repos"]
+        with patch.object(
+            GithubOrgClient, "_public_repos_url", new_callable=PropertyMock
+        ) as mock_public_repos_url:
+            mock_public_repos_url.return_value = test_payload["repos_url"]
+            response = GithubOrgClient("gitloper-azara").public_repos()
+
+            result = ["SkySync", "SkySync_landing_page"]
+
+            self.assertEqual(response, result)
+
+            get_json.assert_called_once()
+            mock_public_repos_url.assert_called_once()
