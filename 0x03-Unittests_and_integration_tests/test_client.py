@@ -57,7 +57,8 @@ class TestGithubOrgClient(unittest.TestCase):
                         "id": 133230975,
                     },
                     "fork": False,
-                    "url": "https://api.github.com/repos/gitloper-azara/SkySync",  # nopep8
+                    "url":
+                    "https://api.github.com/repos/gitloper-azara/SkySync",
                     "created_at": "2024-05-18T13:36:21Z",
                     "updated_at": "2024-06-11T23:36:44Z",
                     "pushed_at": "2024-06-11T23:36:40Z",
@@ -75,7 +76,9 @@ class TestGithubOrgClient(unittest.TestCase):
                         "id": 133230975,
                     },
                     "fork": False,
-                    "url": "https://api.github.com/repos/gitloper-azara/SkySync_landing_page",  # nopep8
+                    "url":
+                    "https://api.github.com/repos/gitloper-azara/"
+                    "SkySync_landing_page",
                     "created_at": "2024-05-31T15:57:37Z",
                     "updated_at": "2024-06-02T18:02:26Z",
                     "pushed_at": "2024-06-02T18:02:23Z",
