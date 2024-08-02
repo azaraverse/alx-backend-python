@@ -4,7 +4,7 @@ import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock, PropertyMock
 from client import GithubOrgClient
-from typing import Dict, Callable, Any
+from typing import Callable, Any
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -110,7 +110,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "other_license"}}, "my_license", False)
     ])
     def test_has_license(
-        self, repo: Dict[str, Dict], license_key: str, expected: bool
+        self, repo, license_key: str, expected: bool
     ) -> Any:
         """ Tests that the has_license method returns the expected value
         by parameterizing the test with inputs
