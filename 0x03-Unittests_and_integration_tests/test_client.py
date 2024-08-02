@@ -4,7 +4,7 @@ import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock, PropertyMock
 from client import GithubOrgClient
-from typing import Dict, Callable
+from typing import Dict, Callable, Any
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("abc",)
     ])
     @patch("client.get_json")
-    def test_org(self, org_name: str, get_json_mock: Mock) -> None:
+    def test_org(self, org_name: str, get_json_mock: Mock) -> Any:
         """ Tests that GithubOrgClient.org returns the correct value
         """
         get_json_mock.return_value = {"name": org_name}
@@ -26,7 +26,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
         self.assertEqual(response, {"name": org_name})
 
-    def test_public_repos_url(self):
+    def test_public_repos_url(self) -> Any:
         """ Tests the _public_repos_url method of the class
         """
         with patch.object(
@@ -42,7 +42,7 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(response, result)
 
     @patch("client.get_json")
-    def test_public_repos(self, get_json: Callable) -> None:
+    def test_public_repos(self, get_json: Callable) -> Any:
         """ Tests the public_repos method of the GithubOrgClient class
         """
         test_payload = {
@@ -111,7 +111,7 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     def test_has_license(
         self, repo: Dict[str, Dict], license_key: str, expected: bool
-    ) -> None:
+    ) -> Any:
         """ Tests that the has_license method returns the expected value
         by parameterizing the test with inputs
         """
