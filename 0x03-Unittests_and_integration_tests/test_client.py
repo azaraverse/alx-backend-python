@@ -33,7 +33,8 @@ class TestGithubOrgClient(unittest.TestCase):
             GithubOrgClient, "org", new_callable=PropertyMock
         ) as mock_org:
             mock_org.return_value = {
-                "repos_url": "https://api.github.com/users/gitloper-azara/repos"  # nopep8
+                "repos_url":
+                "https://api.github.com/users/gitloper-azara/repos"
             }
             response = GithubOrgClient("gitloper-azara")._public_repos_url
             result = "https://api.github.com/users/gitloper-azara/repos"
@@ -91,7 +92,8 @@ class TestGithubOrgClient(unittest.TestCase):
 
         get_json.return_value = test_payload["repos"]
         with patch.object(
-            GithubOrgClient, "_public_repos_url", new_callable=PropertyMock
+            GithubOrgClient, "_public_repos_url",
+            new_callable=PropertyMock
         ) as mock_public_repos_url:
             mock_public_repos_url.return_value = test_payload["repos_url"]
             response = GithubOrgClient("gitloper-azara").public_repos()
@@ -113,7 +115,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """ Tests that the has_license method returns the expected value
         by parameterizing the test with inputs
         """
-        client = GithubOrgClient("gitloper-azara")
+        client = GithubOrgClient("test_org")
         result = client.has_license(repo, license_key)
 
         self.assertEqual(result, expected)
