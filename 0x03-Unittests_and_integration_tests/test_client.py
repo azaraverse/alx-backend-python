@@ -113,7 +113,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """ Tests that the has_license method returns the expected value
         by parameterizing the test with inputs
         """
-        client = GithubOrgClient("test_org")
+        client = GithubOrgClient("gitloper-azara")
         result = client.has_license(repo, license_key)
 
         self.assertEqual(result, expected)
